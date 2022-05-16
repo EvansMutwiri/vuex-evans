@@ -10,15 +10,12 @@ export default {
 
       const store = useStore()
 
-      // const users = [store.state.users];
-
       let users = computed( function () {
 
             return store.state.users
 
         })
 
-      console.log('HERE XXX',users.value.length, users.value[0])
 
       let user = {
           id: users.value[users.value.length-1].id + 1,
@@ -32,6 +29,7 @@ export default {
       
 
       function addUser(sent_user) {
+
         if(sent_user.name === "" || sent_user.email === "" || sent_user.phone === "") {
 
           return;
@@ -39,13 +37,11 @@ export default {
           }
 
         console.log('Console log users value', users.value.length, sent_user)
-        sent_user.id =  users.value[users.value.length-1].id + 1
-        // users.push(user)
-        // console.log(users.length)
 
+        sent_user.id =  users.value[users.value.length-1].id + 1
         
-        // store.commit('addUser', sent_user)
         sent_user = {...sent_user}
+
         store.dispatch('addUser', sent_user)
 
         console.log(users.value)
@@ -63,9 +59,10 @@ export default {
 
 <template>
 
-  <header>
+<div class="grid place-items-center h-screen">
+    <header>
 
-    <h1 class="font-4xl">Vuex</h1>
+    <h1 class="font-4xl font-sans font-bold">Vuex</h1>
     
   </header>
 
@@ -86,6 +83,9 @@ export default {
     <Users/>
 
   </main>
+</div>
+
+
 
 </template>
 
