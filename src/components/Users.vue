@@ -42,7 +42,7 @@
                         <button @click="deleteUser(user.id)"
                            class="px-6 py-2 text-sm rounded shadow bg-rose-100 hover:bg-rose-200 text-rose-500">Delete</button>
 
-                        <button @click="editUser(user.id)"
+                        <button @click="editUser(user)"
                            class="px-6 py-2 text-sm rounded shadow bg-sky-500 hover:bg-sky-200 text-white items-center">
                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                               stroke="currentColor" stroke-width="2">
@@ -71,6 +71,7 @@ export default {
    setup() {
 
       const store = useStore()
+      
 
       let users = computed(function () {
 
@@ -84,11 +85,18 @@ export default {
 
       }
 
-      function editUser(id) {
+      function editUser(updatedUser) {
 
-         console.log("edit User", id)
+         store.commit('setUser', updatedUser)
+
+         // console.log("edit User", id)
+         // let u_edit = users.value.filter(i => i.id === id);
+
+         // console.log("User to edit",u_edit)
          
       }
+
+      // let someUsers = users.filter(item => item.id < 3);
 
       return {
 

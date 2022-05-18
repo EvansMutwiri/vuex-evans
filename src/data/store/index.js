@@ -1,17 +1,12 @@
 import { createStore } from "vuex";
 
 export default createStore({
-    strict: true,
+    
     state: {
+        updatedUser: {},
         users: [
             {
                 id: 1,
-                name: 'Evans',
-                email: 'evans@kwelicapital.com',
-                phone: '0722000000'
-            },
-            {
-                id: 2,
                 name: 'Evans',
                 email: 'evans@kwelicapital.com',
                 phone: '0722000000'
@@ -35,38 +30,6 @@ export default createStore({
             };
         },
 
-        // editUser(state, id) {
-        //     let users = state.users;
-
-        //     let index = users.findIndex((user) => user.id === id);
-            
-        // },
-
-        // updateProject(state, project) {
-
-        //     var index = state.projects.findIndex(function(item, i) {
-        //       return item.id === project.id;
-        //     });
-          
-        //     state.projects = [
-        //       ...state.projects.slice(0, index),
-        //       project,
-        //       ...state.projects.slice(index + 1)
-        //     ]
-        //   },
-
-        editUser (state, user) {
-            let users = state.users;
-
-            const index = users.findIndex(item => item.id === user.id);
-            
-            state.users = [
-                
-                ...state.users.slice(0, index), user,...state.users.slice(index + 1)
-            
-            ]
-          },
-
         addUser(state, user){
             // state.users.push(user);
             state.users =  [
@@ -79,14 +42,32 @@ export default createStore({
         // implement updateUser(state, id)
         // upDate
 
+        setUser(state, updatedUser) {
+            // state.updatedUser = state.users.find(u=> u.id === updatedUser.id)
+            state.updatedUser = updatedUser
+        },
+
+        updateUser(state, updatedUser) {
+            state.updatedUser = state.users.find(u=> u.id === updatedUser.id)
+            // u = updatedUser
+        }
+
+
+        // setAge: (state, payload) => {
+        //     const { age, name } = payload
+        //     const person = state.people.find(p => p.Name === name)
+        //     person.age = age
+        //   }
+
     },
 
     actions: {
         addUser({ commit }, user) {
             console.log('added user', user)
           commit("addUser", user);
-      }
-    },
-    strict: true
+      },
+
+      
+    }
     
 })
