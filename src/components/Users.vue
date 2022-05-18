@@ -87,16 +87,11 @@ export default {
 
       function editUser(updatedUser) {
 
-         store.commit('setUser', updatedUser)
+         console.log("Edit user", updatedUser)
 
-         // console.log("edit User", id)
-         // let u_edit = users.value.filter(i => i.id === id);
-
-         // console.log("User to edit",u_edit)
+         store.dispatch('editUser', updatedUser)
          
       }
-
-      // let someUsers = users.filter(item => item.id < 3);
 
       return {
 

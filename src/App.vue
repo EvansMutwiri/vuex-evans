@@ -40,34 +40,37 @@ export default {
 
     function addUser(sent_user) {
 
-      if (!sent_user.name || !sent_user.email || !sent_user.phone) {
-
-        return;
-
-      }
-
-      console.log('Console log users value', users.value.length, sent_user)
-
-      if (users.value.length >= 1) {
-        sent_user.id = users.value[users.value.length - 1].id + 1
+      if (sent_user.name === '' || sent_user.email === '' || sent_user.phone === '') {
+        alert('Please fill in all fields')
       } else {
-        sent_user.id = 1
+        if (users.value.length >= 1) {
+          sent_user.id = users.value[users.value.length - 1].id + 1
+        } else {
+          sent_user.id = 1
+        }
+
+        sent_user = { ...sent_user }
+
+        store.dispatch('addUser', sent_user)
       }
+    }
 
-      sent_user = { ...sent_user }
+    function updateUser(sent_user) {
 
-      store.dispatch('addUser', sent_user)
+      if (sent_user.name === '' || sent_user.email === '' || sent_user.phone === '') {
+        alert('Please fill in all fields')
+      } else {
+        sent_user = { ...sent_user }
 
-      console.log(users.value)
-
-      updatedUser = {}
-
+        store.dispatch('editUser', sent_user)
+      }
     }
     return {
       addUser,
       user,
       users,
-      updatedUser
+      updatedUser,
+      updateUser
     }
   }
 }
@@ -84,7 +87,7 @@ export default {
     </header>
     <!-- {{ updatedUser }} -->
 
-    <form @submit.prevent="addUser(user)">
+    <form @submit.prevent="">
 
       <input class="border-lime-200 border-2 p-1 ml-2" type="text" v-model.trim="user.name" placeholder="Enter Name">
 
@@ -94,7 +97,11 @@ export default {
       <input class="border-lime-200 border-2 p-1 ml-2" type="text" v-model.trim="user.phone"
         placeholder="Enter Phone Number">
 
-      <button class="px-6 py-2 text-sm rounded shadow bg-sky-100 hover:bg-rose-200 text-sky-500">Add User</button>
+      <button class="px-6 py-2 text-sm rounded shadow bg-sky-100 hover:bg-rose-200 text-sky-500"
+        @click="updateUser(updatedUser)">Update User</button>
+
+        <button class="px-6 py-2 text-sm rounded shadow bg-sky-100 hover:bg-rose-200 text-sky-500"
+        @click="addUser(user)">Add User</button>
 
     </form>
 

@@ -31,34 +31,12 @@ export default createStore({
         },
 
         addUser(state, user){
-            // state.users.push(user);
-            state.users =  [
-
-                ...state.users,user
-
-            ]      
+            state.users.push(user);   
         },
-
-        // implement updateUser(state, id)
-        // upDate
 
         setUser(state, updatedUser) {
-            // state.updatedUser = state.users.find(u=> u.id === updatedUser.id)
-            state.updatedUser = updatedUser
+            state.updatedUser = updatedUser            
         },
-
-        updateUser(state, updatedUser) {
-            state.updatedUser = state.users.find(u=> u.id === updatedUser.id)
-            // u = updatedUser
-        }
-
-
-        // setAge: (state, payload) => {
-        //     const { age, name } = payload
-        //     const person = state.people.find(p => p.Name === name)
-        //     person.age = age
-        //   }
-
     },
 
     actions: {
@@ -66,6 +44,10 @@ export default createStore({
             console.log('added user', user)
           commit("addUser", user);
       },
+
+      editUser({ commit }, updatedUser) {
+        commit("setUser", updatedUser);
+      }
 
       
     }
