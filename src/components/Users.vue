@@ -70,6 +70,10 @@ export default {
    setup() {
 
       const store = useStore()
+
+      let editState = computed(function () {
+         return store.state.editingUser
+      })
       
 
       let users = computed(function () {
@@ -88,15 +92,17 @@ export default {
 
          console.log("Edit user", updatedUser)
 
+         store.commit('editState')
+
          store.dispatch('editUser', updatedUser)
-         
       }
 
       return {
 
          users,
          deleteUser,
-         editUser
+         editUser,
+         editState
 
       }
    }

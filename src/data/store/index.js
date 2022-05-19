@@ -5,8 +5,14 @@ export default createStore({
     state: {
         updatedUser: {},
         users: [
-            
+            {
+                name: 'Evans',
+                email: 'evans@kwelicapital.com',
+                phone: '+2348090878888',
+                id: 1
+            }
         ],
+        editingUser: false,
     },
 
     mutations: {
@@ -32,6 +38,14 @@ export default createStore({
         setUser(state, updatedUser) {
             state.updatedUser = updatedUser            
         },
+
+        editState(state) {
+            state.editingUser = true
+        },
+
+        toggleEditState(state) {
+            state.editingUser = !state.editingUser
+        }
     },
 
     actions: {

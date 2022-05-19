@@ -16,6 +16,14 @@ export default {
 
     const store = useStore()
 
+    let editState = computed(function () {
+
+      return store.state.editingUser
+
+    })
+
+    console.log("Edit state", editState.value)
+
     let users = computed(function () {
 
       return store.state.users
@@ -63,6 +71,8 @@ export default {
         sent_user = { ...sent_user }
 
         store.dispatch('editUser', sent_user)
+
+        store.commit('toggleEditState')
       }
     }
     return {
@@ -70,7 +80,8 @@ export default {
       user,
       users,
       updatedUser,
-      updateUser
+      updateUser,
+      editState
     }
   }
 }
@@ -85,7 +96,6 @@ export default {
       <h1 class="font-4xl font-sans font-bold">Vuex</h1>
 
     </header>
-    <!-- {{ updatedUser }} -->
 
     <form @submit.prevent="" class="flex flex-col bg-gray-100 border py-6 px-10 pt-10">
 
@@ -101,10 +111,10 @@ export default {
 
       <div class="flex justify-end space-x-6 mt-6">
         <button class="px-6 py-2 text-sm rounded shadow bg-green-100 hover:bg-green-200 text-green-500"
-        @click="updateUser(updatedUser)">Update User</button>
+        @click="updateUser(updatedUser)" v-if="editState">Update User</button>
 
         <button class="px-6 py-2 text-sm rounded shadow bg-sky-100 hover:bg-blue-200 text-sky-500"
-        @click="addUser(user)">Add User</button>
+        @click="addUser(user)" v-else>Add User</button>
       </div>
 
     </form>
