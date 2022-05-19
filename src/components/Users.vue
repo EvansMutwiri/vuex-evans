@@ -1,6 +1,5 @@
 <template>
    <div>
-      <!-- component -->
       <div class="bg-white">
 
          <div class="overflow-x-auto border-x border-t">

@@ -28,7 +28,7 @@ export default {
 
 
     let user = {
-      id: users.value[users.value.length - 1].id + 1,
+      // id: users.value[users.value.length - 1].id + 1,
       name: '',
       email: '',
       phone: ''
@@ -79,7 +79,7 @@ export default {
 
 <template>
 
-  <div class="grid place-items-center h-screen">
+  <div class="grid place-items-center h-screen overflow-x-auto border-x border-t">
     <header>
 
       <h1 class="font-4xl font-sans font-bold">Vuex</h1>
@@ -87,31 +87,29 @@ export default {
     </header>
     <!-- {{ updatedUser }} -->
 
-    <form @submit.prevent="">
+    <form @submit.prevent="" class="flex flex-col bg-gray-100 border py-6 px-10 pt-10">
 
-      <input class="border-lime-200 border-2 p-1 ml-2" type="text" v-model.trim="user.name" placeholder="Enter Name">
+      <div class="space-y-2 mx-auto">
+        <input class="w-full p-1 ml-2 border" type="text" v-model.trim="user.name" placeholder="Enter Name">
 
-      <input class="border-lime-200 border-2 p-1 ml-2" type="text" v-model.trim="user.email"
+      <input class="w-full p-1 ml-2 border" type="text" v-model.trim="user.email"
         placeholder="Enter email address">
 
-      <input class="border-lime-200 border-2 p-1 ml-2" type="text" v-model.trim="user.phone"
+      <input class="w-full p-1 ml-2 border" type="text" v-model.trim="user.phone"
         placeholder="Enter Phone Number">
+      </div>
 
-      <button class="px-6 py-2 text-sm rounded shadow bg-sky-100 hover:bg-rose-200 text-sky-500"
+      <div class="flex justify-end space-x-6 mt-6">
+        <button class="px-6 py-2 text-sm rounded shadow bg-green-100 hover:bg-green-200 text-green-500"
         @click="updateUser(updatedUser)">Update User</button>
 
-        <button class="px-6 py-2 text-sm rounded shadow bg-sky-100 hover:bg-rose-200 text-sky-500"
+        <button class="px-6 py-2 text-sm rounded shadow bg-sky-100 hover:bg-blue-200 text-sky-500"
         @click="addUser(user)">Add User</button>
+      </div>
 
     </form>
-
+     <Users />
     <div class="invisible">{{ updatedUser }}</div>
-
-    <main>
-
-      <Users />
-
-    </main>
   </div>
 
 

@@ -5,13 +5,8 @@ export default createStore({
     state: {
         updatedUser: {},
         users: [
-            {
-                id: 1,
-                name: 'Evans',
-                email: 'evans@kwelicapital.com',
-                phone: '0722000000'
-            }
-        ]
+            
+        ],
     },
 
     mutations: {
