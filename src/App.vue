@@ -79,7 +79,7 @@ export default {
 
 <template>
 
-  <div class="grid place-items-center h-screen overflow-x-auto border-x border-t">
+  <div class="grid place-items-center h-screen overflow-x-auto space-y-4">
     <header>
 
       <h1 class="font-4xl font-sans font-bold">Vuex</h1>
