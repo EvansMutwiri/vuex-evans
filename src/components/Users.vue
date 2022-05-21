@@ -41,7 +41,7 @@
                         <button @click="deleteUser(user.id)"
                            class="px-6 py-2 text-sm rounded shadow bg-rose-100 hover:bg-rose-200 text-rose-500">Delete</button>
 
-                        <button @click="editUser(user)"
+                        <button @click="setUser(user)"
                            class="px-6 py-2 text-sm rounded shadow bg-sky-500 hover:bg-sky-200 text-white items-center">
                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                               stroke="currentColor" stroke-width="2">
@@ -59,52 +59,32 @@
 </template>
 
 <script>
-import { computed } from "vue"
-import { useStore } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 
 
 export default {
 
    name: 'users',
 
+   methods:{
+      ...mapActions({
+         'editUser':'editUser',
+         'deleteUser':'deleteUser',
+      }),
+      setUser(user){
+         this.editUser(user)
+      }
+   },
+
+
+   computed:{
+      ...mapGetters({
+         users:'getUsers'
+      })
+   },
+
    setup() {
-
-      const store = useStore()
-
-      let editState = computed(function () {
-         return store.state.editingUser
-      })
-      
-
-      let users = computed(function () {
-
-         return store.state.users
-
-      })
-
-      function deleteUser(id) {
-
-         store.commit('removeUser', id)
-
-      }
-
-      function editUser(updatedUser) {
-
-         console.log("Edit user", updatedUser)
-
-         store.commit('editState')
-
-         store.dispatch('editUser', updatedUser)
-      }
-
-      return {
-
-         users,
-         deleteUser,
-         editUser,
-         editState
-
-      }
+      return {}
    }
 }
 </script>
