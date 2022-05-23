@@ -23,6 +23,9 @@ export default createStore({
 
         removeUser(state, id){
 
+            let conf = confirm('Are you sure you want to delete this user?');
+            if(conf === false) return;
+
             let users = state.users;
 
             let index = users.findIndex((user) => user.id === id);
@@ -37,9 +40,10 @@ export default createStore({
 
         addUser(state, user){
 
-            let length = state.users.length;
+            // let length = state.users.length;
 
-            user.id = length + 1;
+            // user.id = length + 1;
+            state.users.length >= 1 ? user.id = state.users[state.users.length - 1].id + 1 : user.id = 1;
 
             state.users.push({...state.users, ...user}); 
 
