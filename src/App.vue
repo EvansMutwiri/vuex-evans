@@ -18,7 +18,6 @@ export default {
       // this.$refs.user_email.value = this.user.email
       // this.$refs.user_phone.value = this.user.phone
       
-      console.log(this.form_user)
   
     }
   },
@@ -102,11 +101,10 @@ export default {
           placeholder="Enter Phone Number">
       </div>
       <div class="flex justify-end space-x-6 mt-6">
-        <button class="px-6 py-2 text-sm rounded shadow bg-green-100 hover:bg-green-200 text-green-500"
-          @click="createUser" v-if="editState">Update User</button>
+        
 
         <button class="px-6 py-2 text-sm rounded shadow bg-sky-100 hover:bg-blue-200 text-sky-500"
-          @click="createUser" v-else>
+          @click="createUser">
         
           {{action==='save'?'Save User':'Update User'}}
           </button>

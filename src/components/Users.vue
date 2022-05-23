@@ -83,6 +83,10 @@ export default {
       })
    },
 
+   created: function () {
+      this.$store.commit('initializeUsers')
+   },
+
    setup() {
       return {}
    }

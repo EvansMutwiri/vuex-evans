@@ -5,12 +5,12 @@ export default createStore({
     state: {
         updatedUser: {},
         users: [
-            {
-                name: 'Evans',
-                email: 'evans@kwelicapital.com',
-                phone: '+2348090878888',
-                id: 1
-            }
+            // {
+            //     name: 'Evans',
+            //     email: 'evans@kwelicapital.com',
+            //     phone: '+2348090878888',
+            //     id: 1
+            // }
         ],
         editingUser: false,
     },
@@ -41,7 +41,9 @@ export default createStore({
 
             user.id = length + 1;
 
-            state.users.push({...state.users, ...user});   
+            state.users.push({...state.users, ...user}); 
+
+            localStorage.setItem('users', JSON.stringify(state.users));  
         },
 
         setUser(state, updatedUser) {
@@ -62,6 +64,12 @@ export default createStore({
                     state.users[index] = user
                 }
             });
+        },
+
+        initializeUsers(state) {
+            if(localStorage.getItem('users')) {
+                state.users = JSON.parse(localStorage.getItem('users'));
+            }
         }
     },
 
