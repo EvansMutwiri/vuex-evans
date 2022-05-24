@@ -1,87 +1,81 @@
 <script >
-import { computed } from '@vue/runtime-core';
-import { useStore } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Users from './components/Users.vue';
 
 export default {
   components: { Users },
-
   watch: {
-    updatedUser: function () {
-      this.user = this.updatedUser
+    user: function () {
+
+      this.action = 'update'
+      this.editing = 'yes'
+
+      this.form_user.id = this.user.id
+      this.form_user.email = this.user.email
+      this.form_user.phone = this.user.phone
+      this.form_user.name = this.user.name
+
+      // this.$refs.user_name.value=this.user.name;
+      // this.$refs.user_email.value = this.user.email
+      // this.$refs.user_phone.value = this.user.phone
+      
+  
     }
   },
-
-  setup() {
-
-    const store = useStore()
-
-    let editState = computed(function () {
-
-      return store.state.editingUser
-
-    })
-
-    console.log("Edit state", editState.value)
-
-    let users = computed(function () {
-
-      return store.state.users
-
-    })
-
-    let updatedUser = computed(function () {
-      return store.state.updatedUser
-    })
-
-
-    let user = {
-      // id: users.value[users.value.length - 1].id + 1,
-      name: '',
-      email: '',
-      phone: ''
-    }
-
-    console.log('Here is the user', updatedUser)
-
-
-
-    function addUser(sent_user) {
-
-      if (sent_user.name === '' || sent_user.email === '' || sent_user.phone === '') {
-        alert('Please fill in all fields')
-      } else {
-        if (users.value.length >= 1) {
-          sent_user.id = users.value[users.value.length - 1].id + 1
-        } else {
-          sent_user.id = 1
+  methods:{
+    createUser(){
+      if(this.form_user.name=='' || this.form_user.email=='' || this.form_user.phone==''){
+        alert("Please fill all the fields")
+      }
+      else{
+        if(this.action==='save'){
+          this.addUser(this.form_user)
+          this.editing = 'no'
+        }else{
+          this.updateUserStore(this.form_user)
+          this.editing = 'no'
         }
-
-        sent_user = { ...sent_user }
-
-        store.dispatch('addUser', sent_user)
+          this.clearUserForm()
       }
-    }
 
-    function updateUser(sent_user) {
-
-      if (sent_user.name === '' || sent_user.email === '' || sent_user.phone === '') {
-        alert('Please fill in all fields')
-      } else {
-        sent_user = { ...sent_user }
-
-        store.dispatch('editUser', sent_user)
-
-        store.commit('toggleEditState')
+    },
+    clearUserForm(){
+      this.form_user = {
+        id:'',
+        name:'',
+        phone:'',
+        email:''
       }
-    }
+      // this.$refs.user_id.value = ''
+      // this.$refs.user_email.value=''
+      // this.$refs.user_phone.value=''
+      // this.$refs.user_name.value=''
+      this.action = 'save'
+      // console.log(this.form_user)
+      // this.form_user.email = ''
+    },
+    ...mapActions({
+        addUser:"addUser",
+        updateUserStore:"updateUserStore",
+        toggleEditState:"toggleEditState"
+    })
+  },
+  computed:{
+    ...mapGetters({
+      'users':'getUsers',
+      'user':'getUser'
+    })
+  },
+
+  data() {
     return {
-      addUser,
-      user,
-      users,
-      updatedUser,
-      updateUser,
-      editState
+      action:'save',
+      editing: 'no',
+      form_user:{
+        name:'',
+        phone:'',
+        email:''
+      },
     }
   }
 }
@@ -90,36 +84,39 @@ export default {
 
 <template>
 
-  <div class="grid place-items-center h-screen overflow-x-auto space-y-4">
+  <div class="flex flex-col place-items-center space-y-6 h-screen overflow-x-auto pt-20">
     <header>
 
       <h1 class="font-4xl font-sans font-bold">Vuex</h1>
 
     </header>
 
-    <form @submit.prevent="" class="flex flex-col bg-gray-100 border py-6 px-10 pt-10">
+    <button v-if="editing==='no'" @click="editing='yes'" class="px-6 py-2 text-sm rounded shadow bg-green-100 hover:bg-lime-200 text-green-500">Add User</button>
+    <form @submit.prevent="" class="flex flex-col bg-gray-100 border py-6 px-10 pt-10 shadow-2xl" ref="user_form" v-if="editing==='yes'">
 
       <div class="space-y-2 mx-auto">
-        <input class="w-full p-1 ml-2 border" type="text" v-model.trim="user.name" placeholder="Enter Name">
+         <input class="w-full p-1 ml-2 border" type="text" v-model.trim="form_user.id" placeholder="Enter Name" ref="user_id" style="display:none">
 
-      <input class="w-full p-1 ml-2 border" type="text" v-model.trim="user.email"
-        placeholder="Enter email address">
+        <input class="w-full p-1 ml-2 border" type="text" v-model.trim="form_user.name" placeholder="Enter Name" ref="user_name">
 
-      <input class="w-full p-1 ml-2 border" type="text" v-model.trim="user.phone"
-        placeholder="Enter Phone Number">
+        <input class="w-full p-1 ml-2 border" type="text" v-model.trim="form_user.email" ref="user_email"
+          placeholder="Enter email address">
+
+        <input class="w-full p-1 ml-2 border" type="text" v-model.trim="form_user.phone" ref="user_phone"
+          placeholder="Enter Phone Number">
       </div>
-
       <div class="flex justify-end space-x-6 mt-6">
-        <button class="px-6 py-2 text-sm rounded shadow bg-green-100 hover:bg-green-200 text-green-500"
-        @click="updateUser(updatedUser)" v-if="editState">Update User</button>
+        
 
         <button class="px-6 py-2 text-sm rounded shadow bg-sky-100 hover:bg-blue-200 text-sky-500"
-        @click="addUser(user)" v-else>Add User</button>
+          @click="createUser">
+        
+          {{action==='save'?'Save User':'Update User'}}
+          </button>
       </div>
 
     </form>
-     <Users />
-    <div class="invisible">{{ updatedUser }}</div>
+    <Users v-if="editing==='no'" />
   </div>
 
 
