@@ -8,6 +8,7 @@ export default {
     user: function () {
 
       this.action = 'update'
+      this.editing = 'yes'
 
       this.form_user.id = this.user.id
       this.form_user.email = this.user.email
@@ -29,8 +30,10 @@ export default {
       else{
         if(this.action==='save'){
           this.addUser(this.form_user)
+          this.editing = 'no'
         }else{
           this.updateUserStore(this.form_user)
+          this.editing = 'no'
         }
           this.clearUserForm()
       }
@@ -67,6 +70,7 @@ export default {
   data() {
     return {
       action:'save',
+      editing: 'no',
       form_user:{
         name:'',
         phone:'',
@@ -80,14 +84,15 @@ export default {
 
 <template>
 
-  <div class="grid place-items-center h-screen overflow-x-auto space-y-4">
+  <div class="flex flex-col place-items-center space-y-6 h-screen overflow-x-auto pt-20">
     <header>
 
       <h1 class="font-4xl font-sans font-bold">Vuex</h1>
 
     </header>
 
-    <form @submit.prevent="" class="flex flex-col bg-gray-100 border py-6 px-10 pt-10" ref="user_form">
+    <button v-if="editing==='no'" @click="editing='yes'" class="px-6 py-2 text-sm rounded shadow bg-green-100 hover:bg-lime-200 text-green-500">Add User</button>
+    <form @submit.prevent="" class="flex flex-col bg-gray-100 border py-6 px-10 pt-10 shadow-2xl" ref="user_form" v-if="editing==='yes'">
 
       <div class="space-y-2 mx-auto">
          <input class="w-full p-1 ml-2 border" type="text" v-model.trim="form_user.id" placeholder="Enter Name" ref="user_id" style="display:none">
@@ -111,7 +116,7 @@ export default {
       </div>
 
     </form>
-    <Users />
+    <Users v-if="editing==='no'" />
   </div>
 
 

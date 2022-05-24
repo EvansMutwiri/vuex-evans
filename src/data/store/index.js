@@ -47,7 +47,7 @@ export default createStore({
 
             state.users.push({...state.users, ...user}); 
 
-            localStorage.setItem('users', JSON.stringify(state.users));  
+            localStorage.setItem('users', JSON.stringify(state.users));  // save to local storage
         },
 
         setUser(state, updatedUser) {
